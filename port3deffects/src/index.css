@@ -1,0 +1,89 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light;
+  --background: 0 0% 100%;
+  --foreground: 0 0% 7%;
+  --border: 220 13% 91%;
+  --color-background: #FFFFFF;
+  --color-foreground: #111111;
+  --grid-pulse-line: rgba(0, 0, 0, 0.04);
+}
+
+body {
+  background-color: #FFFFFF;
+  color: #111111;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  overflow-x: hidden;
+}
+
+/* Custom Sleek Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #FFFFFF;
+}
+::-webkit-scrollbar-thumb {
+  background: #E5E7EB;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #0284C7;
+}
+
+/* Selection */
+::selection {
+  background-color: #0284C7;
+  color: #FFFFFF;
+}
+
+/* Technical Developer Card Utilities */
+.dev-card {
+  background-color: #FFFFFF;
+  border: 1px solid #E5E7EB;
+  border-radius: 1rem;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.03), 0 1px 2px -1px rgba(0, 0, 0, 0.02);
+}
+
+.dev-card-hover {
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.dev-card-hover:hover {
+  border-color: #CBD5E1;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.06), 0 8px 10px -6px rgba(0, 0, 0, 0.03);
+  transform: translateY(-2px);
+}
+
+.dev-pill {
+  background-color: #F8FAFC;
+  border: 1px solid #E5E7EB;
+}
+
+/* Subtle Technical Dot Matrix Background */
+.bg-tech-grid {
+  background-size: 32px 32px;
+  background-image: 
+    radial-gradient(circle at 1px 1px, rgba(0, 0, 0, 0.05) 1px, transparent 0);
+}
+
+/* Typography Gradient Utilities */
+.text-gradient-cyan {
+  background: linear-gradient(135deg, #0284C7 0%, #0369A1 50%, #4338CA 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.text-gradient-dark,
+.text-gradient-white {
+  background: linear-gradient(135deg, #111111 0%, #333333 60%, #555555 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Clean code block */
+pre, code {
+  font-family: 'JetBrains Mono', monospace;
+}
