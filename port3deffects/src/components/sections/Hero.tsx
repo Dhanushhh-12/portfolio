@@ -1,10 +1,12 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { PERSONAL_INFO, TERMINAL_DATA } from '../../data/portfolioData';
 import { Github, Linkedin, ArrowRight, Terminal as TerminalIcon, Sparkles } from '../ui/icons';
 import { useHeroEntrance } from '../../hooks/useGSAPAnimations';
+import { PhotoCard } from '../ui/PhotoCard';
 
 export const Hero: React.FC = () => {
   const heroRef = useRef<HTMLElement>(null);
+  const [activeView, setActiveView] = useState<'photo' | 'terminal'>('photo');
 
   const scrollToProjects = () => {
     const el = document.getElementById('projects');
@@ -28,7 +30,7 @@ export const Hero: React.FC = () => {
       <div className="w-full grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
         
         {/* Left Column: Core Value Proposition & Headings */}
-        <div className="lg:col-span-7 space-y-6">
+        <div className="lg:col-span-6 space-y-6">
           
           {/* Status Badge */}
           <div className="hero-badge inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#F0F9FF] border border-[#BAE6FD] text-xs font-mono">
@@ -43,7 +45,7 @@ export const Hero: React.FC = () => {
 
           {/* Main Headline (60-72px, weight 700-800) */}
           <div className="hero-headline space-y-2">
-            <h1 className="text-4xl sm:text-6xl lg:text-[68px] font-extrabold tracking-tight text-[#111111] leading-[1.08]">
+            <h1 className="text-4xl sm:text-6xl lg:text-[64px] font-extrabold tracking-tight text-[#111111] leading-[1.08]">
               Hi, I'm <span className="text-[#0284C7]">Dhanush</span>. <br />
               I build <span className="text-gradient-cyan">modern digital</span> experiences.
             </h1>
@@ -109,52 +111,82 @@ export const Hero: React.FC = () => {
 
         </div>
 
-        {/* Right Column: Subtle Developer Terminal Card */}
-        <div className="lg:col-span-5">
-          <div className="hero-terminal-card dev-card dev-card-hover overflow-hidden bg-[#FFFFFF] border border-[#E5E7EB] shadow-sm">
-            
-            {/* Terminal Window Header */}
-            <div className="flex items-center justify-between px-4 py-3 bg-[#F8FAFC] border-b border-[#E5E7EB]">
-              <div className="flex items-center gap-2">
-                <TerminalIcon className="w-3.5 h-3.5 text-[#0284C7]" />
-                <span className="text-xs font-mono text-[#555555]">dhanush@developer: ~</span>
-              </div>
-              <div className="flex items-center gap-1.5">
-                <div className="w-2.5 h-2.5 rounded-full bg-[#EF4444]/80" />
-                <div className="w-2.5 h-2.5 rounded-full bg-[#F59E0B]/80" />
-                <div className="w-2.5 h-2.5 rounded-full bg-[#10B981]/80" />
-              </div>
+        {/* Right Column: 3D PhotoCard Showcase with Mode Toggle */}
+        <div className="lg:col-span-6 flex flex-col items-center justify-center">
+          <div className="w-full max-w-xl">
+            {/* View Switcher Pills */}
+            <div className="flex items-center justify-end gap-2 mb-3 pr-2">
+              <button
+                onClick={() => setActiveView('photo')}
+                className={`inline-flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-mono rounded-lg transition-all duration-200 ${
+                  activeView === 'photo'
+                    ? 'bg-[#0284C7] text-white shadow-sm font-semibold'
+                    : 'bg-[#F1F5F9] text-[#64748B] hover:bg-[#E2E8F0] hover:text-[#1E293B]'
+                }`}
+              >
+                <span>✦ 3D Photo Card</span>
+              </button>
+              <button
+                onClick={() => setActiveView('terminal')}
+                className={`inline-flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-mono rounded-lg transition-all duration-200 ${
+                  activeView === 'terminal'
+                    ? 'bg-[#0284C7] text-white shadow-sm font-semibold'
+                    : 'bg-[#F1F5F9] text-[#64748B] hover:bg-[#E2E8F0] hover:text-[#1E293B]'
+                }`}
+              >
+                <span>&gt;_ Terminal</span>
+              </button>
             </div>
 
-            {/* Terminal Shell Body */}
-            <div className="p-6 font-mono text-xs sm:text-[13px] space-y-4 text-[#111111]">
-              {TERMINAL_DATA.map((item, idx) => (
-                <div key={idx} className="space-y-1">
-                  <div className="text-[#555555] flex items-center gap-2">
-                    <span className="text-[#0284C7] font-semibold">{item.label}</span>
+            {activeView === 'photo' ? (
+              <div className="w-full">
+                <PhotoCard showBackground={true} />
+              </div>
+            ) : (
+              <div className="hero-terminal-card dev-card dev-card-hover overflow-hidden bg-[#FFFFFF] border border-[#E5E7EB] shadow-sm">
+                {/* Terminal Window Header */}
+                <div className="flex items-center justify-between px-4 py-3 bg-[#F8FAFC] border-b border-[#E5E7EB]">
+                  <div className="flex items-center gap-2">
+                    <TerminalIcon className="w-3.5 h-3.5 text-[#0284C7]" />
+                    <span className="text-xs font-mono text-[#555555]">dhanush@developer: ~</span>
                   </div>
-                  <div className="pl-4 text-[#111111] font-medium flex items-center gap-2">
-                    {idx === TERMINAL_DATA.length - 1 ? (
-                      <span className="inline-flex items-center gap-2 text-[#0284C7]">
-                        <span>{item.value}</span>
-                        <span className="inline-block w-2 h-4 bg-[#0284C7] animate-pulse" />
-                      </span>
-                    ) : (
-                      <span>{item.value}</span>
-                    )}
+                  <div className="flex items-center gap-1.5">
+                    <div className="w-2.5 h-2.5 rounded-full bg-[#EF4444]/80" />
+                    <div className="w-2.5 h-2.5 rounded-full bg-[#F59E0B]/80" />
+                    <div className="w-2.5 h-2.5 rounded-full bg-[#10B981]/80" />
                   </div>
                 </div>
-              ))}
 
-              <div className="pt-4 border-t border-[#E5E7EB] flex items-center justify-between text-[11px] font-mono text-[#777777]">
-                <span className="flex items-center gap-1.5 text-[#0284C7] font-medium">
-                  <Sparkles className="w-3.5 h-3.5" />
-                  <span>Interactive Systems & AI</span>
-                </span>
-                <span>Node v20.x • TypeScript 5</span>
+                {/* Terminal Shell Body */}
+                <div className="p-6 font-mono text-xs sm:text-[13px] space-y-4 text-[#111111]">
+                  {TERMINAL_DATA.map((item, idx) => (
+                    <div key={idx} className="space-y-1">
+                      <div className="text-[#555555] flex items-center gap-2">
+                        <span className="text-[#0284C7] font-semibold">{item.label}</span>
+                      </div>
+                      <div className="pl-4 text-[#111111] font-medium flex items-center gap-2">
+                        {idx === TERMINAL_DATA.length - 1 ? (
+                          <span className="inline-flex items-center gap-2 text-[#0284C7]">
+                            <span>{item.value}</span>
+                            <span className="inline-block w-2 h-4 bg-[#0284C7] animate-pulse" />
+                          </span>
+                        ) : (
+                          <span>{item.value}</span>
+                        )}
+                      </div>
+                    </div>
+                  ))}
+
+                  <div className="pt-4 border-t border-[#E5E7EB] flex items-center justify-between text-[11px] font-mono text-[#777777]">
+                    <span className="flex items-center gap-1.5 text-[#0284C7] font-medium">
+                      <Sparkles className="w-3.5 h-3.5" />
+                      <span>Interactive Systems & AI</span>
+                    </span>
+                    <span>Node v20.x • TypeScript 5</span>
+                  </div>
+                </div>
               </div>
-            </div>
-
+            )}
           </div>
         </div>
 
